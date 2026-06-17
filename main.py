@@ -25,5 +25,10 @@ async def get_current_time():
     return{"current_time": datetime.now()}
 
 @app.get("/quote")
-async def get_random_quote():
+async def get_random_quote(index: int | None = None):
+    if index is not None:
+        if 0<=index<len(PROPHETIC_QUOTES):
+            return{"Quote": PROPHETIC_QUOTES[index]}
+        else:
+            return {"error": f"Index out of range. Please provide a number between 0 and {len(PROPHETIC_QUOTES) - 1}."}
     return{"Quote": random.choice(PROPHETIC_QUOTES)}
